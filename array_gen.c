@@ -1,50 +1,51 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdarg.h>
 
+typedef void* item;
 
-struct Nlarray {
+struct array {
     int MAX_LIMIT;
-    int filled;
-    void *first_item;
+    int length;
+    int size_item;
+    item first_item;
 };
 
-int get_args_len(va_list args) {
-    int current_arg;
-    int c;
-    for (c = 1; current_arg != 0; c++) {
-        current_arg = va_arg(args, int);
-    }
-    va_end(args);
-    return c;
-}
+typedef struct array array;
 
-struct Nlarray *nlarray(void *arr, size_t size, size_t size_item) {
+array* make_arr(void *source_arr, size_t size, size_t size_item) {
     int i;
-    int filled = size;
+    int length = size;
     int MAX_LIMIT = 200;
     void *array_fixed_len[MAX_LIMIT];
-    struct Nlarray *nlarr;
+    array *arr;
     for (i = 0; i < size; i++) {
-        array_fixed_len[i] = arr;
-        arr += size_item; 
+        array_fixed_len[i] = source_arr;
+        source_arr += size_item; 
     }
-    nlarr = malloc(sizeof nlarr);
-    nlarr->MAX_LIMIT = MAX_LIMIT;
-    nlarr->filled = filled;
-    nlarr->first_item = (void *)(array_fixed_len[0]);
-    return nlarr;
+    arr = malloc(sizeof arr);
+    arr->MAX_LIMIT = MAX_LIMIT;
+    arr->length = length;
+    arr->size_item = size_item;
+    arr->first_item = (void *)(array_fixed_len[0]);
+    return arr;
+}
+
+void iter(array* arr, void (*func)()) {
+    int i;
+    item current = arr->first_item;
+    for (i = 0; i < arr->length; i++) {
+        func(current, i);
+        current += arr->size_item;
+    }
+}
+
+void print(item item, int i) {
+    printf("arr[%d] = %d;\n", i, *(int *)item);
 }
 
 void main() {
-    long int arr[] = {10, 0, 20};
-    void *arr_pt = &(arr[0]);
-    struct Nlarray *nlarr = nlarray(arr_pt, 3, sizeof (long int));
-    for (int i = 0; i < 3; i++) {
-        long int *item = (long int*)(nlarr->first_item);
-        printf("%d\n", *item);
-        nlarr->first_item += sizeof (long int); 
-    }
-    printf("limit: %d", nlarr->MAX_LIMIT);
-    free(nlarr);
+    int source_arr[] = {10, 0, 20, 30, 10, 49};
+    array* arr = make_arr((void *)source_arr, 6, sizeof (int));
+    iter(arr, (void *)print);
+    free(arr);
 }
