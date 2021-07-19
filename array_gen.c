@@ -30,6 +30,14 @@ array* make_arr(void *source_arr, size_t size, size_t size_item) {
     return arr;
 }
 
+item get(array* arr, int i) {
+    if (i > arr->length) {
+        return (item) NULL;
+    }
+    item address = arr->first_item + (arr->size_item * i);
+    return address;
+}
+
 void iter(array* arr, void (*func)()) {
     int i;
     item current = arr->first_item;
@@ -46,6 +54,7 @@ void print(item item, int i) {
 void main() {
     int source_arr[] = {10, 0, 20, 30, 10, 49};
     array* arr = make_arr((void *)source_arr, 6, sizeof (int));
+    printf("%d\n", *(int *)get(arr, arr->length - 1));
     iter(arr, (void *)print);
     free(arr);
 }
