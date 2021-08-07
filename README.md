@@ -1,3 +1,3 @@
-# Implementing data-structures in C langauge
+# Implementing data-structures in C language
 
 
