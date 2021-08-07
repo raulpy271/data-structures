@@ -1,2 +1,3 @@
-# Creating an dynamic array
+# Implementing data-structures in C langauge
+
 
