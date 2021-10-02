@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -65,6 +64,36 @@ void* get(dict_t* table, char key[]) {
     }
 };
 
+void unset(dict_t* table, char key[]) {
+    int hash_index = hash(key, TABLE_SIZE);
+    item_t* item_to_unset = &(table->itens[hash_index]);
+    if(!is_null(item_to_unset)) {
+        if (item_to_unset->next == NULL) {
+            if (strcmp(item_to_unset->key, &(key[0])) == 0) {
+                *item_to_unset = (item_t){NULL, NULL, NULL};
+            }
+        } else if (strcmp(item_to_unset->key, &(key[0])) == 0) {
+            item_t* next = item_to_unset->next;
+            item_to_unset->key = next->key;
+            item_to_unset->value = next->value;
+            item_to_unset->next = next->next;
+            *next = (item_t){NULL, NULL, NULL};
+        } else {
+            item_t* before = item_to_unset;
+            item_to_unset = item_to_unset->next;
+            while((strcmp(item_to_unset->key, &(key[0])) != 0)) {
+                before = item_to_unset;
+                item_to_unset = item_to_unset->next;
+                if (item_to_unset == NULL) {
+                    return;
+                }
+            }
+            before->next = item_to_unset->next;
+            *item_to_unset = (item_t){NULL, NULL, NULL};
+        }
+    }
+}
+
 void set(dict_t* table, char key[], void* value) {
     int hash_index = hash(key, TABLE_SIZE);
     item_t* item_to_set = &(table->itens[hash_index]);
@@ -93,11 +122,4 @@ void set(dict_t* table, char key[], void* value) {
         }
     }
 };
-
-int main() {
-    dict_t* table = alloc_dict();
-    set(table, "raul", (void *)0x00ff);
-    printf("table[\"raul\"] = %p\n", get(table, "raul"));
-    return 0;
-}
 

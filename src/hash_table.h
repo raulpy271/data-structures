@@ -26,3 +26,6 @@ int hash(char key[], size_t table_size);
 void* get(dict_t* table, char key[]);
 
 void set(dict_t* table, char key[], void* value);
+
+void unset(dict_t* table, char key[]);
+
