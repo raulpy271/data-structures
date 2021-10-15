@@ -8,5 +8,6 @@ These repository implements some of these datatypes:
 
 - [Doubly linked list](/doubly_linked_list_example.c)
 
+- [hash table](/hash_table_example.c)
 
 
