@@ -36,8 +36,8 @@ vertex_t* get_vertex(graph_t* graph, unsigned int vertex_value) {
 void print_graph(graph_t* graph) {
     for (int i = 0; i < graph->size; i++) {
         vertex_t* vrt = graph->adj[i];
-        unsigned int pred_value = 0;
-        if (vrt->pred) pred_value = vrt->pred->value;
+        int pred_value = -1;
+        if (vrt->pred) pred_value = (int) vrt->pred->value;
         printf(" - vertex: %d | visited: %d | pred: %d | dist: %d | finish: %d \n",
             vrt->value,
             vrt->visited,
