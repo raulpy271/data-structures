@@ -4,6 +4,7 @@
 
 #include <stdbool.h>
 #include "dlist.h"
+#define INF (unsigned int) -1
 
 typedef struct vertex_t {
     unsigned int value;
@@ -25,6 +26,8 @@ vertex_t* alloc_vertex(unsigned int vertex, size_t size, ...);
 vertex_t* get_vertex(graph_t* graph, unsigned int vertex_value);
 
 void print_graph(graph_t* graph);
+
+void bfs(graph_t* graph, vertex_t* vrt);
 
 void dfs(graph_t* graph);
 

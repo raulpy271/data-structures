@@ -53,6 +53,30 @@ void print_graph(graph_t* graph) {
     }
 }
 
+void bfs(graph_t* graph, vertex_t* vrt) {
+    dlist_t* queue = alloc_dlist();
+    for (int i = 0; i < graph->size; i++) {
+        if (graph->adj[i] != vrt) {
+            graph->adj[i]->distance = INF;
+        }
+    }
+    vrt->visited = true;
+    append_right(queue, (void *) vrt);
+    while (!is_empty(queue)) {
+        vrt = (vertex_t*) pop_left(queue);
+        for (int i = 0; i < vrt->adj_size; i++) {
+            unsigned int neighbor_value = (unsigned int) (long unsigned int) get(vrt->adj, i);
+            vertex_t* neighbor = get_vertex(graph, neighbor_value);
+            if (!neighbor->visited) {
+                neighbor->visited = true;
+                neighbor->distance = vrt->distance + 1;
+                neighbor->pred = vrt;
+                append_right(queue, (void *) neighbor);
+            }
+        }
+    }
+}
+
 void dfs(graph_t* graph) {
     unsigned int time = 0;
     for (int i = 0; i < graph->size; i++) {
