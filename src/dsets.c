@@ -38,21 +38,16 @@ dset_member_t* alloc_dset_member(void* member) {
     dset_member->member = member;
     dset_member->dset = NULL;
     dset_member->next = NULL;
-    return member;
+    return dset_member;
 }
 
-dset_member_t* make_set(dsets_t* dsets, void* member) {
-    printf("Criando set\n");
-    dset_member_t* dset_member = malloc(sizeof (dset_member_t));
+dset_member_t* make_set(dsets_t* dsets, dset_member_t* dset_member) {
     dset_t* dset = malloc(sizeof (dset_t));
     dset->head = dset_member;
     dset->tail  = dset_member;
-    dset_member->member = member;
-    dset_member->next = NULL;
-    dset_member->dset = (void*) dset;
+    dset_member->dset = dset;
     dsets_t* node = dsets;
     if (!EMPTY_DSETS(dsets)) {
-        printf("Criando set em dsets existentes\n");
         dsets_t* last_node = dsets;
         while (last_node->next) {
             last_node = last_node->next;
@@ -91,6 +86,13 @@ void union_set(dsets_t** dsets, dset_member_t* member1, dset_member_t* member2) 
         printf("to remove: %p\n", to_remove);
         free(to_remove);
     }
+    member1->dset->tail->next = member2->dset->head;
+    member1->dset->tail = member2->dset->tail;
+    dset_member_t* member_to_join = member2->dset->head;
+    free(member2->dset);
+    while (member_to_join) {
+        member_to_join->dset = member1->dset;
+        member_to_join = member_to_join->next;
+    }
 }
-
 
