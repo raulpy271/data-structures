@@ -11,11 +11,17 @@ bin/linux/libuset.o: src/uset.*
 bin/linux/libdsets.o: src/dsets.*
 	gcc -c src/dsets.c -o bin/linux/libdsets.o
 
+bin/linux/libkruskal.o: src/kruskal.*
+	gcc -c src/kruskal.c -o bin/linux/libkruskal.o
+
 uset_example.out: bin/linux/libuset.o uset_example.c
 	gcc uset_example.c bin/linux/libuset.o -o uset_example.out
 
 dsets_example.out: bin/linux/libdsets.o dsets_example.c
 	gcc dsets_example.c bin/linux/libdsets.o -o dsets_example.out
+
+kruskal_example.out: bin/linux/libdsets.o bin/linux/libkruskal.o kruskal_example.c
+	gcc kruskal_example.c bin/linux/libdsets.o bin/linux/libkruskal.o -o kruskal_example.out
 
 hash_table_example.out: bin/linux src/hash_table.* hash_table_example.c
 	gcc -c src/hash_table.c -o bin/linux/libhashtable.o

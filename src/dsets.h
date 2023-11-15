@@ -26,7 +26,6 @@ typedef struct dsets_t {
 dsets_t* alloc_dsets();
 dset_member_t* alloc_dset_member(void* member);
 void free_dsets(dsets_t* dsets);
-void free_dset(dset_t* dset);
 dset_member_t* make_set(dsets_t* dsets, dset_member_t* dset_member);
 dset_member_t* find_set(dset_member_t* member);
 void union_set(dsets_t** dsets, dset_member_t* member1, dset_member_t* member2);

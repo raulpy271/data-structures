@@ -1,6 +1,5 @@
 
 #include <stdlib.h>
-#include <stdio.h>
 #include "dsets.h"
 
 dsets_t* alloc_dsets() {
@@ -17,19 +16,9 @@ void free_dsets(dsets_t* dsets) {
         while (dsets) {
             dsets_t* to_remove = dsets;
             dsets = dsets->next;
-            free_dset(to_remove->set);
+            free(to_remove->set);
             free(to_remove);
         }
-    }
-}
-
-void free_dset(dset_t* dset) {
-    dset_member_t* member = dset->head;
-    free(dset);
-    while (member) {
-        dset_member_t* to_free = member;
-        member = member->next;
-        free(to_free);
     }
 }
 
@@ -71,7 +60,6 @@ void union_set(dsets_t** dsets, dset_member_t* member1, dset_member_t* member2) 
         if (next_to_remove->next) {
             to_remove = next_to_remove;
             *dsets = next_to_remove->next;
-            printf("to remove: %p\n", to_remove);
             free(to_remove);
         } else {
             // ERROR: Só há apenas um conjunto na lista de conjuntos
@@ -83,7 +71,6 @@ void union_set(dsets_t** dsets, dset_member_t* member1, dset_member_t* member2) 
         }
         to_remove = next_to_remove->next;
         next_to_remove->next = to_remove->next;
-        printf("to remove: %p\n", to_remove);
         free(to_remove);
     }
     member1->dset->tail->next = member2->dset->head;
