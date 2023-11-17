@@ -1,3 +1,7 @@
+
+#ifndef DLIST_H_
+#define DLIST_H_
+
 #include <stdbool.h>
 
 typedef struct DoublyEndedList dlist_t;
@@ -36,4 +40,4 @@ void* pop_left(dlist_t* list);
 
 void* get(dlist_t* list, int index);
 
-
+#endif // DLIST_H_
