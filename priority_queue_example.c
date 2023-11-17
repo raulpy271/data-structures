@@ -8,7 +8,7 @@ bool smallest_int(void* a, void* b) {
 
 void sort_arr_using_queue(queue_t* queue, int arr[]) {
     int i = 0;
-    while(!is_empty(*queue)) {
+    while(!is_empty_queue(*queue)) {
         arr[i] = *(int *)pop(queue, smallest_int);
         i++;
     }

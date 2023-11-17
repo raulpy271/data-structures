@@ -11,7 +11,7 @@ struct Node {
 
 node_t* alloc_node();
 
-bool is_empty(queue_t);
+bool is_empty_queue(queue_t);
 
 /* 
  * Return and remove from the queue the element with have most priority. 
@@ -23,4 +23,4 @@ void* pop(queue_t*, bool (* compare_priority_of)(void*, void*));
 
 void insert(queue_t*, void*);
 
-
+bool in_queue(queue_t queue, void* element);

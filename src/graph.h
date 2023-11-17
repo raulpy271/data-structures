@@ -2,6 +2,7 @@
 #ifndef GRAPH_H_
 #define GRAPH_H_
 
+#include <stddef.h>
 #include <stdbool.h>
 #include "dlist.h"
 #define INF (unsigned int) -1

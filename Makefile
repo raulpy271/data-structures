@@ -14,6 +14,15 @@ bin/linux/libdsets.o: src/dsets.*
 bin/linux/libkruskal.o: src/kruskal.*
 	gcc -c src/kruskal.c -o bin/linux/libkruskal.o
 
+bin/linux/libpriority_queue.o: src/priority_queue.*
+	gcc -c src/priority_queue.c -o bin/linux/libpriority_queue.o
+
+bin/linux/libgraph.o: src/graph.*
+	gcc -c src/graph.c -o bin/linux/libgraph.o
+
+bin/linux/libprim.o: src/prim.*
+	gcc -c src/prim.c -o bin/linux/libprim.o
+
 uset_example.out: bin/linux/libuset.o uset_example.c
 	gcc uset_example.c bin/linux/libuset.o -o uset_example.out
 
@@ -27,9 +36,11 @@ hash_table_example.out: bin/linux src/hash_table.* hash_table_example.c
 	gcc -c src/hash_table.c -o bin/linux/libhashtable.o
 	gcc hash_table_example.c bin/linux/libhashtable.o -lm -o hash_table_example.out
 
-graph_example.out: bin/linux src/graph.* graph_example.c bin/linux/libdlist.o
-	gcc -c src/graph.c -o bin/linux/libgraph.o
+graph_example.out: graph_example.c bin/linux/libgraph.o bin/linux/libdlist.o
 	gcc graph_example.c bin/linux/libgraph.o bin/linux/libdlist.o -o graph_example.out
+
+prim_example.out: prim_example.c bin/linux/libprim.o bin/linux/libpriority_queue.o bin/linux/libdlist.o
+	gcc prim_example.c bin/linux/libprim.o bin/linux/libpriority_queue.o bin/linux/libdlist.o -o prim_example.out
 
 exec_hash_table_example: hash_table_example
 	./hash_table_example.out

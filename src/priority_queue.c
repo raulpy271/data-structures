@@ -9,7 +9,7 @@ node_t* alloc_node() {
     return node;
 }
 
-bool is_empty(queue_t queue) {
+bool is_empty_queue(queue_t queue) {
     return queue->element == NULL;
 }
 
@@ -24,7 +24,7 @@ void* pop(queue_t* queue, bool (* compare_priority_of)(void*, void*)) {
     node_t* higher_priority = *queue;
     node_t* next = (*queue)->next;
     void* popped_element = NULL;
-    while (!is_empty(next)) {
+    while (!is_empty_queue(next)) {
         if (!compare_priority_of(higher_priority->element, next->element)) {
             higher_priority = next;
         }
@@ -42,4 +42,13 @@ void insert(queue_t* queue, void* element) {
     *queue = node;
 };
 
+bool in_queue(queue_t queue, void* element) {
+    while(!is_empty_queue(queue)) {
+        if (queue->element == element) {
+            return true;
+        }
+        queue = queue->next;
+    }
+    return false;
+}
 
