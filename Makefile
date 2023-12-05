@@ -23,6 +23,9 @@ bin/linux/libgraph.o: src/graph.*
 bin/linux/libprim.o: src/prim.*
 	gcc -c src/prim.c -o bin/linux/libprim.o
 
+bin/linux/libbellman.o: src/bellman_ford.*
+	gcc -c src/bellman_ford.c -o bin/linux/libbellman.o
+
 uset_example.out: bin/linux/libuset.o uset_example.c
 	gcc uset_example.c bin/linux/libuset.o -o uset_example.out
 
@@ -31,6 +34,9 @@ dsets_example.out: bin/linux/libdsets.o dsets_example.c
 
 kruskal_example.out: bin/linux/libdsets.o bin/linux/libkruskal.o kruskal_example.c
 	gcc kruskal_example.c bin/linux/libdsets.o bin/linux/libkruskal.o -o kruskal_example.out
+
+bellman_ford_example.out: bin/linux/libbellman.o bellman_ford_example.c
+	gcc bellman_ford_example.c bin/linux/libbellman.o -o bellman_ford_example.out
 
 hash_table_example.out: bin/linux src/hash_table.* hash_table_example.c
 	gcc -c src/hash_table.c -o bin/linux/libhashtable.o
