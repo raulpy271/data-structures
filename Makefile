@@ -29,6 +29,9 @@ bin/linux/libbellman.o: src/bellman_ford.*
 bin/linux/libdijkstra.o: src/dijkstra.*
 	gcc -c src/dijkstra.c -o bin/linux/libdijkstra.o
 
+bin/linux/libfloyd_warshall.o: src/floyd_warshall.*
+	gcc -c src/floyd_warshall.c -o bin/linux/libfloyd_warshall.o
+
 uset_example.out: bin/linux/libuset.o uset_example.c
 	gcc uset_example.c bin/linux/libuset.o -o uset_example.out
 
@@ -50,8 +53,12 @@ graph_example.out: graph_example.c bin/linux/libgraph.o bin/linux/libdlist.o
 
 prim_example.out: prim_example.c bin/linux/libprim.o bin/linux/libpriority_queue.o bin/linux/libdlist.o
 	gcc prim_example.c bin/linux/libprim.o bin/linux/libpriority_queue.o bin/linux/libdlist.o -o prim_example.out
+
 dijkstra_example.out: dijkstra_example.c bin/linux/libdijkstra.o bin/linux/libpriority_queue.o bin/linux/libdlist.o
 	gcc dijkstra_example.c bin/linux/libdijkstra.o bin/linux/libpriority_queue.o bin/linux/libdlist.o -o dijkstra_example.out
+
+floyd_warshall_example.out: floyd_warshall_example.c bin/linux/libfloyd_warshall.o
+	gcc floyd_warshall_example.c bin/linux/libfloyd_warshall.o -o floyd_warshall_example.out
 
 exec_hash_table_example: hash_table_example
 	./hash_table_example.out
